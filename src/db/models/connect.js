@@ -1,3 +1,10 @@
 import Product from './product.js'
+import Review from './review.js';
 
-export {Product};
+
+Product.hasMany(Review);
+Review.belongsTo(Product);
+
+
+
+export {Product, Review};

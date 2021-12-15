@@ -1,12 +1,13 @@
 import express from 'express'
 import sequelize, { testDB } from './db/sequalization.js'
 import productsRouter from './services/products/product.js'
+import reviewsRouter from './services/products/reviews/review.js'
 const server = express()
 const port = process.env.PORT
 
 server.use(express.json())
 server.use("/products", productsRouter)
-// server.use("/reviews", reviewsRouter)
+server.use("/reviews", reviewsRouter)
 
 
 server.listen(port, async()=> {
