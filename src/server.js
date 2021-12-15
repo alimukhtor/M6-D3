@@ -8,8 +8,8 @@ import Product from './db/models/product.js'
 import Review from './db/models/review.js';
 
 
-Product.hasMany(Review);
-Review.belongsTo(Product);
+Product.hasMany(Review, { onDelete: "CASCADE" });
+Review.belongsTo(Product, { onDelete: "CASCADE" });
 
 export {Product, Review};
 
