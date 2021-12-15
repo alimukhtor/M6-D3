@@ -35,7 +35,7 @@ const Product = sequelize.define(
             allowNull:false,
         },
         price:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.FLOAT,
             allowNull:false
         }
 
@@ -43,4 +43,4 @@ const Product = sequelize.define(
 
 );
 
-export default Product
+export default Product;
