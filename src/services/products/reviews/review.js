@@ -1,12 +1,13 @@
 import express from 'express'
-import Review from '../../../db/models/review.js'
+// import Review from '../../../db/models/review.js'
+import {Review, Product} from '../../../server.js'
 
 const reviewsRouter = express.Router()
 
 reviewsRouter.get("/", async(request, response, next)=> {
     try {
         const reviews = await Review.findAll({
-            attributes: {...request.body}
+           include:Product
         })
 
         response.send(reviews)

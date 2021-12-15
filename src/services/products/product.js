@@ -1,5 +1,5 @@
 import express from 'express'
-import Product from '../../db/models/product.js'
+import {Product, Review} from '../.././server.js'
 
 
 const productsRouter = express.Router()
@@ -7,7 +7,8 @@ const productsRouter = express.Router()
 productsRouter.get("/", async(request, response, next)=> {
     try {
         const products = await Product.findAll({
-            attributes: {...request.body}
+            attribute:{...request.body},
+            include:Review
         })
         response.send(products)
     } catch (error) {
