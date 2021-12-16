@@ -7,6 +7,7 @@ import Product from './db/models/product.js'
 import Review from './db/models/review.js';
 import Category from './db/models/category.js'
 import productCategory from './db/models/productCategory.js'
+import User from './db/models/users.js'
 
 // ********************** TABLES CONNECTIONS ****************
 Product.hasMany(Review, { onDelete: "CASCADE" });
@@ -15,7 +16,10 @@ Review.belongsTo(Product, { onDelete: "CASCADE" });
 Category.belongsToMany(Product, {through: productCategory, onDelete: "CASCADE"});
 Product.belongsToMany(Category, {through: productCategory, onDelete: "CASCADE"});
 
-export {Product, Review, Category, productCategory};
+User.hasMany(Review, { onDelete: "CASCADE" });
+Review.belongsTo(User, { onDelete: "CASCADE" });
+
+export {Product, Review, Category, productCategory, User};
 
 // *********************** END OF CONNECTIONS **********************
 
@@ -29,5 +33,5 @@ server.use("/reviews", reviewsRouter)
 server.listen(port, async()=> {
     console.log(`Server is running on port ${port}`);
     await testDB()
-    await sequelize.sync();
+    await sequelize.sync({force:true});
 } )
