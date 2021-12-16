@@ -1,5 +1,6 @@
 import express from 'express'
 import {Product, Review} from '../.././server.js'
+import {Op} from 'sequelize';
 
 
 const productsRouter = express.Router()
@@ -7,8 +8,15 @@ const productsRouter = express.Router()
 productsRouter.get("/", async(request, response, next)=> {
     try {
         const products = await Product.findAll({
-            attribute:{...request.body},
-            include:Review
+            // attribute:{...request.body},
+            // include:Review
+            // where:{
+            //     name:{
+            //         [Op.iLike]:'%ung%'
+
+            //     }
+            // }
+            order:[['name', 'ASC']]
         })
         response.send(products)
     } catch (error) {
