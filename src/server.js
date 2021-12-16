@@ -1,14 +1,21 @@
 import express from 'express'
 import sequelize, { testDB } from './db/sequalization.js'
 import productsRouter from './services/products/product.js'
-import reviewsRouter from './services/products/reviews/review.js'
-const server = express()
+import reviewsRouter from './services/reviews/review.js'
+import usersRouter from './services/users/user.js'
+import categoryRouter from './services/category/category.js'
 import Product from './db/models/product.js'
 import Review from './db/models/review.js';
 import Category from './db/models/category.js'
 import productCategory from './db/models/productCategory.js'
 import User from './db/models/users.js'
 
+
+
+
+
+
+const server = express()
 // ********************** TABLES CONNECTIONS ****************
 Product.hasMany(Review, { onDelete: "CASCADE" });
 Review.belongsTo(Product, { onDelete: "CASCADE" });
@@ -28,10 +35,12 @@ const port = process.env.PORT
 server.use(express.json())
 server.use("/products", productsRouter)
 server.use("/reviews", reviewsRouter)
+server.use("/users", usersRouter)
+server.use("/category", categoryRouter)
 
 
 server.listen(port, async()=> {
     console.log(`Server is running on port ${port}`);
     await testDB()
-    await sequelize.sync({force:true});
+    await sequelize.sync();
 } )

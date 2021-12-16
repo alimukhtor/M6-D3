@@ -29,7 +29,8 @@ const User = sequelize.define(
             allowNull:false,
         },
         age:{
-            type:DataTypes.INTEGER
+            type:DataTypes.INTEGER,
+            allowNull:false,
         },
         country:{
             type:DataTypes.STRING,
