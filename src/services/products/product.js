@@ -1,5 +1,5 @@
 import express from 'express'
-import {Product, Review, Category} from '../.././server.js'
+import {Product, Review, Category, productCategory} from '../.././server.js'
 import {Op} from 'sequelize';
 
 
@@ -41,8 +41,22 @@ productsRouter.get("/", async(request, response, next)=> {
 })
 productsRouter.post("/", async(request, response, next)=> {
     try {
+        console.log(request.body);
         const newProducts = await Product.create(request.body)
+        // const {categoryId, ...restCategory} = request.body
+        // const newProducts = await Product.create(restCategory)
+        // if(newProducts){
+        //     // console.log("My id:", product_id);
+            
+        //     const dataToInsert = categoryId.map((id) => ({
+        //         categoryId: id,
+        //         productId: id,
+        //     }));
+        //     const data = await productCategory.bulkCreate(dataToInsert);
+        //     res.send({ newProducts, productCategory: data });
+        // }   
         response.status(201).send(newProducts)
+        // response.send("created")
     } catch (error) {
         console.log(error);
         next(error)
