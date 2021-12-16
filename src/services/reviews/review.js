@@ -1,13 +1,13 @@
 import express from 'express'
 // import Review from '../../../db/models/review.js'
-import {Review, Product} from '../../server.js'
+import {Review, Product, User} from '../../server.js'
 
 const reviewsRouter = express.Router()
 
 reviewsRouter.get("/", async(request, response, next)=> {
     try {
         const reviews = await Review.findAll({
-           include:Product
+           include:[Product, User]
         })
 
         response.send(reviews)
@@ -20,6 +20,7 @@ reviewsRouter.post("/", async(request, response, next)=> {
         const newReview = await Review.create(request.body)
         response.status(201).send(newReview)        
     } catch (error) {
+        console.log("Error is:", error);
         next(error)
     }
 })

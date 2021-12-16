@@ -1,5 +1,5 @@
 import express from 'express'
-import {Product, Review} from '../.././server.js'
+import {Product, Review, Category} from '../.././server.js'
 import {Op} from 'sequelize';
 
 
@@ -9,7 +9,7 @@ productsRouter.get("/", async(request, response, next)=> {
     try {
         const products = await Product.findAll({
             // attribute:{...request.body},
-            include:Review,
+            include:[Review, Category],
             // where: request.query.name ? {
             //     name:{
             //         [Op.iLike]:`%${request.query.name}%`,
@@ -29,8 +29,8 @@ productsRouter.get("/", async(request, response, next)=> {
                     ]
                 })
                 
-            }
-            // order:[['name', 'ASC']] 
+            },
+            order:[['name', 'ASC']] 
         })
         response.send(products)
     } catch (error) {

@@ -18,10 +18,6 @@ const Review = sequelize.define(
         text:{
             type:DataTypes.TEXT,
             allowNull:false,
-        },
-        username:{
-            type:DataTypes.STRING,
-            allowNull:false,
         }
     }
 )
