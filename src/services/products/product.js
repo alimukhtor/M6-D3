@@ -22,15 +22,19 @@ productsRouter.get("/", async(request, response, next)=> {
                     [Op.or]:[
                        {
                         name: {[Op.iLike]: `%${request.query.search}%`},
+                       },
+                       {
+                        description: {[Op.iLike]: `%${request.query.search}%`},
                        } 
                     ]
                 })
                 
-            },
-            order:[['name', 'ASC']] 
+            }
+            // order:[['name', 'ASC']] 
         })
         response.send(products)
     } catch (error) {
+        console.log("errro is:", error);
         next(error)
     }
 

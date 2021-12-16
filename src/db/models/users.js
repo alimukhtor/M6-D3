@@ -3,15 +3,13 @@ import s from "sequelize"
 const {DataTypes} = s
 // "id": 1,
 // "name": STRING,
-// "category": STRING, 
-// "description": TEXT, 
-// "image":"url(IMAGE LINK)",
-// "price":FLOAT,
-// "createdAt": "DATE",
-// "updatedAt": "DATE",   
+// "last_name": STRING, 
+// "email": STRING, 
+// "age":INTEGER,
+// "country": STRING,
 
-const Product = sequelize.define(
-    "product",
+const User = sequelize.define(
+    "user",
     {
         id:{
             primaryKey:true,
@@ -22,16 +20,19 @@ const Product = sequelize.define(
             type:DataTypes.STRING,
             allowNull:false,
         },
-        description:{
-            type:DataTypes.TEXT,
+        last_name:{
+            type:DataTypes.STRING,
             allowNull:false,
         },
-        image:{
-            type:DataTypes.TEXT,
+        email:{
+            type:DataTypes.STRING,
             allowNull:false,
         },
-        price:{
-            type:DataTypes.FLOAT,
+        age:{
+            type:DataTypes.INTEGER
+        },
+        country:{
+            type:DataTypes.STRING,
             allowNull:false
         }
 
@@ -39,4 +40,4 @@ const Product = sequelize.define(
 
 );
 
-export default Product;
+export default User;

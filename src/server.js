@@ -3,16 +3,21 @@ import sequelize, { testDB } from './db/sequalization.js'
 import productsRouter from './services/products/product.js'
 import reviewsRouter from './services/products/reviews/review.js'
 const server = express()
-// import Product from './product.js'
 import Product from './db/models/product.js'
 import Review from './db/models/review.js';
+import Category from './db/models/category.js'
+import productCategory from './db/models/productCategory.js'
 
-
+// ********************** TABLES CONNECTIONS ****************
 Product.hasMany(Review, { onDelete: "CASCADE" });
 Review.belongsTo(Product, { onDelete: "CASCADE" });
 
-export {Product, Review};
+Category.belongsToMany(Product, {through: productCategory, onDelete: "CASCADE"});
+Product.belongsToMany(Category, {through: productCategory, onDelete: "CASCADE"});
 
+export {Product, Review, Category, productCategory};
+
+// *********************** END OF CONNECTIONS **********************
 
 const port = process.env.PORT
 
