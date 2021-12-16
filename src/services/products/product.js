@@ -9,14 +9,25 @@ productsRouter.get("/", async(request, response, next)=> {
     try {
         const products = await Product.findAll({
             // attribute:{...request.body},
-            // include:Review
-            // where:{
+            include:Review,
+            // where: request.query.name ? {
             //     name:{
-            //         [Op.iLike]:'%ung%'
+            //         [Op.iLike]:`%${request.query.name}%`,
+            //         // [Op.iLike]:`%${request.query.description}%`
 
             //     }
-            // }
-            order:[['name', 'ASC']]
+            // }:{},
+            where: {
+                ...(request.query.search && {
+                    [Op.or]:[
+                       {
+                        name: {[Op.iLike]: `%${request.query.search}%`},
+                       } 
+                    ]
+                })
+                
+            },
+            order:[['name', 'ASC']] 
         })
         response.send(products)
     } catch (error) {
