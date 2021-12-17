@@ -34,8 +34,7 @@ User.hasMany(Review, { onDelete: "CASCADE" });
 Review.belongsTo(User, { onDelete: "CASCADE" });
 
 
-User.hasMany(Cart, { onDelete: "CASCADE" }),
-Cart.belongsTo(User, { onDelete: "CASCADE" })
+
 
 Product.hasMany(Cart, { onDelete: "CASCADE" });
 Cart.belongsTo(Product, { onDelete: "CASCADE" });

@@ -22,8 +22,8 @@ productsRouter.get("/", async (request, response, next) => {
         }),
       },
       order: [["name", "ASC"]],
-      limit:request.query.limit,
-      offset: parseInt(request.query.limit * request.query.page)
+      // limit:request.query.limit,
+      // offset: parseInt(request.query.limit * request.query.page)
     });
     response.send(products);
   } catch (error) {
