@@ -1,6 +1,6 @@
 import {Sequelize}  from 'sequelize'
-const { DB_URL } = process.env
-const sequelize = new Sequelize(DB_URL,{
+const { HEROKU_URI } = process.env
+const sequelize = new Sequelize(HEROKU_URI,{
   dialect: "postgres",
 })
 export const testDB = async () => {
