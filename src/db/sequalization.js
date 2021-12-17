@@ -1,12 +1,6 @@
 import {Sequelize}  from 'sequelize'
 const { DB_URL } = process.env
-const sequelize = new Sequelize(DB_URL,  {dialectOptions: {         // IMPORTANT
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  }
-},
-});
+const sequelize = new Sequelize(DB_URL);
 
 export const testDB = async () => {
     try {
