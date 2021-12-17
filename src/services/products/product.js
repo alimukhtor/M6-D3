@@ -8,15 +8,8 @@ const productsRouter = express.Router()
 productsRouter.get("/", async(request, response, next)=> {
     try {
         const products = await Product.findAll({
-            // attribute:{...request.body},
             include:[Review, Category],
-            // where: request.query.name ? {
-            //     name:{
-            //         [Op.iLike]:`%${request.query.name}%`,
-            //         // [Op.iLike]:`%${request.query.description}%`
-
-            //     }
-            // }:{},
+           
             where: {
                 ...(request.query.search && {
                     [Op.or]:[
@@ -39,24 +32,50 @@ productsRouter.get("/", async(request, response, next)=> {
     }
 
 })
+
+productsRouter.get("/", async(request, response, next)=> {
+    try {
+        const products = await Product.findAll({
+            include: [
+                { 
+                model: Category,
+                through: { attributes: []},
+                where: {
+                    ...(request.query.category && {
+                      // if there is category in the filter
+                      name: {
+                        [Op.in]: request.query.category, // operator to filter by multiple category ( &category=Sql,React.js)
+                      },
+                    }),
+                  },
+                },
+        ],
+            order:[['name', 'ASC']] 
+        })
+        response.send(products)
+    } catch (error) {
+        console.log("errro is:", error);
+        next(error)
+    }
+
+})
 productsRouter.post("/", async(request, response, next)=> {
     try {
         console.log(request.body);
-        const newProducts = await Product.create(request.body)
-        // const {categoryId, ...restCategory} = request.body
-        // const newProducts = await Product.create(restCategory)
-        // if(newProducts){
-        //     // console.log("My id:", product_id);
+        // const newProducts = await Product.create(request.body)
+        const {categoryId, ...restCategory} = request.body
+        const newProducts = await Product.create(restCategory)
+        if(newProducts){
+            console.log("Product id:", newProducts.id);
             
-        //     const dataToInsert = categoryId.map((id) => ({
-        //         categoryId: id,
-        //         productId: id,
-        //     }));
-        //     const data = await productCategory.bulkCreate(dataToInsert);
-        //     res.send({ newProducts, productCategory: data });
-        // }   
+            const dataToInsert = categoryId.map((id) => ({
+                categoryId: id,
+                productId: newProducts.id,
+            }));
+            const data = await productCategory.bulkCreate(dataToInsert);
+            response.send({ newProducts, productCategory: data });
+        }   
         response.status(201).send(newProducts)
-        // response.send("created")
     } catch (error) {
         console.log(error);
         next(error)
