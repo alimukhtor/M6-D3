@@ -45,12 +45,16 @@ export {Product, Review, Category, productCategory, User, Cart};
 
 const port = process.env.PORT
 
+// ************************* ENDPOINTS ********************************8
 server.use(express.json())
 server.use("/products", productsRouter)
 server.use("/reviews", reviewsRouter)
 server.use("/users", usersRouter)
 server.use("/category", categoryRouter)
 server.use("/cart", cartRouter)
+
+// ************************* ENDPOINTS ENDS HERE ********************************8
+
 
 
 server.listen(port, async()=> {
